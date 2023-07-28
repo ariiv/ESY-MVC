@@ -9,15 +9,16 @@ namespace ESY_MVC.Data
         { 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("DefaultConnection", builder =>
-            {
-                builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-            });
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("DefaultConnection", builder =>
+        //    {
+        //        builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        //    });
+        //    base.OnConfiguring(optionsBuilder);
+        //}
         public DbSet<User> Users => Set<User>();
-        public DbSet<User> Products => Set<User>();
+        public DbSet<Product> Products => Set<Product>();
+        public DbSet<Audit> Audits => Set<Audit>();
     }
 }

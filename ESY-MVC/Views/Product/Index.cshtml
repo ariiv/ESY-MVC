@@ -1,0 +1,36 @@
+﻿@model ProductModel
+
+<h2>Product</h2>
+
+<table class="Product">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Unit Count</th>
+            <th>Price Per Unit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.ProductName</td>
+                <td>@product.UnitCount</td>
+                <td>@product.PricePerUnit</td>
+                <td>
+                    <span> | </span>
+                    <a asp-action="Read" asp-route-id="@product.Id">Read</a><span> | </span>
+                
+                    @if (Model.IsAdmin)
+                    {
+                        <a asp-action="Update" asp-route-id="@product.Id">Update</a><span> | </span>
+                        <a asp-action="Delete" asp-route-id="@product.Id">Delete</a><span> | </span>
+                    }
+                </td>
+            </tr>
+        } 
+    </tbody>
+</table>

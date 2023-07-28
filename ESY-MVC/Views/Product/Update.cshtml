@@ -1,0 +1,29 @@
+﻿@model ESY_MVC.Models.Product
+
+<h2>Update Product</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductName)
+        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ProductName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UnitCount)
+        @Html.TextBoxFor(model => model.UnitCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.UnitCount)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PricePerUnit)
+        @Html.TextBoxFor(model => model.PricePerUnit, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.PricePerUnit)
+    </div>
+
+    <input type="submit" value="Save" class="btn btn-primary" />
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+}

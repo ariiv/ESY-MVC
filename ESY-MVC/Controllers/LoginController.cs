@@ -1,21 +1,21 @@
-﻿using ESY_MVC.Data;
+﻿using Azure.Core;
+using ESY_MVC.Data;
 using ESY_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ESY_MVC.Controllers
 {
-    public class LogInController : Controller
+    public class LoginController : Controller
     {
         private readonly DataContext _db;
 
-        public LogInController(DataContext db)
+        public LoginController(DataContext db)
         {
             _db = db;
         }
 
-        public IActionResult Login()
+        public ActionResult Login()
         {
             return View();
         }
@@ -23,18 +23,17 @@ namespace ESY_MVC.Controllers
         [HttpPost]
         public ActionResult Login(User credentials)
         {  
-
             if (ModelState.IsValid)
             {
                 var user = _db.Users.FirstOrDefault(u => u.Username == credentials.Username && u.Password == credentials.Password);
 
                 if (user != null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Product", user);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    TempData["ErrorMessage"] = "Invalid username or password.";
                 }
             }
 

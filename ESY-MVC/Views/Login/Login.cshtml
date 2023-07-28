@@ -1,8 +1,14 @@
 ﻿@model ESY_MVC.Models.User
 
-
 @{
     ViewBag.Title = "Log in";
+}
+
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
 }
 
 @using (Html.BeginForm("Login", "Login", FormMethod.Post))
@@ -12,11 +18,13 @@
     <div>
         @Html.LabelFor(m => m.Username)
         @Html.TextBoxFor(m => m.Username)
+        @Html.ValidationMessageFor(m => m.Username)
     </div>
 
     <div>
         @Html.LabelFor(m => m.Password)
         @Html.PasswordFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password)
     </div>
 
     <div>

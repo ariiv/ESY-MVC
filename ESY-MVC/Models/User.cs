@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace ESY_MVC.Models
 {
@@ -11,6 +12,7 @@ namespace ESY_MVC.Models
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
+        [Required]
+        public bool IsAdmin { get; set; }
     }
 }
