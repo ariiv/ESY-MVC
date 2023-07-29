@@ -8,11 +8,11 @@ namespace ESY_MVC.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly DataContext _db;
+        private readonly DataContext _dbContext;
 
         public LoginController(DataContext db)
         {
-            _db = db;
+            _dbContext = db;
         }
 
         public ActionResult Login()
@@ -25,7 +25,7 @@ namespace ESY_MVC.Controllers
         {  
             if (ModelState.IsValid)
             {
-                var user = _db.Users.FirstOrDefault(u => u.Username == credentials.Username && u.Password == credentials.Password);
+                var user = _dbContext.Users.FirstOrDefault(u => u.Username == credentials.Username && u.Password == credentials.Password);
 
                 if (user != null)
                 {

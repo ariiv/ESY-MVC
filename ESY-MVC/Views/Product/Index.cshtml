@@ -1,18 +1,32 @@
 ﻿@model ProductModel
 
-<h2>Product</h2>
+
+@{
+    ViewData["Title"] = "Product";
+    ViewData["UserId"] = Model.UserId;
+    ViewData["IsAdmin"] = Model.IsAdmin;
+}
+
+
+<h2>Preces</h2>
 
 <table class="Product">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Product Name</th>
-            <th>Unit Count</th>
-            <th>Price Per Unit</th>
+            <th>Preces ID</th>
+            <th>Preces nosaukums</th>
+            <th>Vienību skaits</th>
+            <th>Cena par vienu vienību</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+        @if (Model.IsAdmin)
+        {
+        <a asp-action="Create" class="btn btn-primary">Create</a>
+        <hr />
+        }
+
         @foreach (var product in Model.Products)
         {
             <tr>
@@ -21,16 +35,20 @@
                 <td>@product.UnitCount</td>
                 <td>@product.PricePerUnit</td>
                 <td>
-                    <span> | </span>
-                    <a asp-action="Read" asp-route-id="@product.Id">Read</a><span> | </span>
-                
+                    <a asp-action="Read" asp-route-id="@product.Id">Read</a>
+
                     @if (Model.IsAdmin)
                     {
-                        <a asp-action="Update" asp-route-id="@product.Id">Update</a><span> | </span>
-                        <a asp-action="Delete" asp-route-id="@product.Id">Delete</a><span> | </span>
+                        <a asp-action="Update" asp-route-id="@product.Id">Update</a>
+                        <a asp-action="Delete" asp-route-id="@product.Id">Delete</a>
                     }
                 </td>
             </tr>
         } 
     </tbody>
 </table>
+
+<form asp-action="Logout" method="post">
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Logout" class="btn btn-secondary" style="margin-top: 40px;" />
+</form>

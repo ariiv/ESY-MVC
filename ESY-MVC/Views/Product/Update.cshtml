@@ -7,19 +7,19 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ProductName)
+        @Html.LabelFor(model => model.ProductName, "Preces nosaukums", htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.ProductName)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.UnitCount)
+        @Html.LabelFor(model => model.UnitCount, "Vienību skaits", htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(model => model.UnitCount, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.UnitCount)
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PricePerUnit)
+    <div class="form-group" style="margin-bottom: 40px">
+        @Html.LabelFor(model => model.PricePerUnit, "Cena par vienu vienību", htmlAttributes: new { @class = "control-label" })
         @Html.TextBoxFor(model => model.PricePerUnit, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.PricePerUnit)
     </div>

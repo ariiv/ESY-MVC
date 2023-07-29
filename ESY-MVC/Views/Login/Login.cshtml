@@ -15,19 +15,19 @@
 {
     @Html.AntiForgeryToken()
 
-    <div>
+    <div style="margin: 20px">
         @Html.LabelFor(m => m.Username)
         @Html.TextBoxFor(m => m.Username)
         @Html.ValidationMessageFor(m => m.Username)
     </div>
 
-    <div>
+    <div style="margin: 20px">
         @Html.LabelFor(m => m.Password)
         @Html.PasswordFor(m => m.Password)
         @Html.ValidationMessageFor(m => m.Password)
     </div>
 
     <div>
-        <input type="submit" value="Login" />
+        <input class="btn btn-secondary" type="submit" value="Login" />
     </div>
 }
