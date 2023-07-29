@@ -1,6 +1,8 @@
 ﻿using ESY_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Security.AccessControl;
 using System.Text.Json;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -18,23 +20,25 @@ namespace ESY_API.Controllers
         }
 
         [HttpGet(Name = "GetAuditData")]
-        public IActionResult GetAuditLogs(DateTime? fromDate = null, DateTime? toDate = null)
+        public async Task<IActionResult> GetAuditLogsAsync(DateTime? fromDate = null, DateTime? toDate = null)
         {
-            var query = _dbContext.Audits.AsQueryable();
+            var auditLogs = _dbContext.Audits.ToList();
 
             if (fromDate != null)
             {
-                query = query.Where(a => DateTime.ParseExact(a.TimeStamp, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) >= fromDate);
+                auditLogs = auditLogs
+                    .Where(a => a.TimeStamp != null && ParseTimeStampToDateTime(a.TimeStamp) >= fromDate.Value)
+                    .ToList();
             }
 
             if (toDate != null)
             {
-                query = query.Where(a => DateTime.ParseExact(a.TimeStamp, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) <= toDate);
+                auditLogs = auditLogs
+                    .Where(a => a.TimeStamp != null && ParseTimeStampToDateTime(a.TimeStamp) <= toDate.Value)
+                    .ToList();
             }
 
-            var auditLogs = query.ToList();
-            auditLogs = auditLogs.OrderByDescending(a => DateTime.ParseExact(a.TimeStamp, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture)).Take(10).ToList();
-
+            auditLogs = auditLogs.OrderByDescending(a => ParseTimeStampToDateTime(a.TimeStamp)).Take(10).ToList();
 
             var jsonResult = new JsonResult(auditLogs, new JsonSerializerOptions
             {
@@ -43,6 +47,11 @@ namespace ESY_API.Controllers
             });
 
             return jsonResult;
+        }
+
+        private static DateTime ParseTimeStampToDateTime (string timeStamp)
+        {
+            return DateTime.ParseExact(timeStamp, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
         }
     }
 }

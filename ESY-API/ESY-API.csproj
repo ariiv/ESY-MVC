@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>ESY_API</RootNamespace>
+    <UserSecretsId>c3d4c952-27da-431c-8dd5-ed3109916b8a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
